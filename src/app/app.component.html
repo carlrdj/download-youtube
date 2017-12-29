@@ -1,20 +1,116 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
+<div class="row">
+  <div class="col-lg-8">
+    <div class="row">
+      <div class="col-lg-8 push-lg-2">
+        <div class="input-group input-group-lg m-3">
+          <input id="query" type="text" class="form-control" placeholder="Buscar ..." value="Secret Base" [(ngModel)]="search">
+          <div class="input-group-addon" (click)="getYoutubeListSearch()">
+            <i class="ion-search"></i>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-12">
+        <ng-container *ngFor="let video of videos">
+          
+          <div class="list-group-item list-group-item-action">
+            <div class="container">
+              <div class="row">
+                <div class="col-lg-3 text-center">
+                  <img width="120px" height="90px" src="{{ video.snippet.thumbnails.default.url }}" class="m-2">
+                </div>
+                <div class="col-lg-6">
+                  <h5 class="m-2">{{ video.snippet.title }}</h5>
+                  <i class="m-2"><b>Autor: </b>{{ video.snippet.channelTitle }}</i>
+                </div>
+                <div class="col-lg-3 text-center">
+                  <button class="btn btn-success m-1" (click)="download(video.id.videoId)">Descargar</button>
+                  <button class="btn btn-info m-1" (click)="viewVideo(video.id.videoId)">Ver video</button>
+                </div>
+              </div>
+            </div>
+          </div>
 
+        </ng-container>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-4">
+    <div class="bg-danger text-white text-center mt-2 mb-3">
+      <h3 class="display-5 p-3">Youtube</h3>
+    </div>
+
+    <div *ngIf="viewVideoOk">
+      <iframe [src]="videoUrl" width="100%" height="300" frameborder="0" scrolling="no"></iframe>
+    </div>
+
+
+    <div *ngIf="viewVideoOk || downloadOk" class="list-group-item  mt-3">
+      <div class="container">
+        <div class="row">
+          <div class="col-12" *ngIf="downloadOk">
+            <img src="{{ videoImageMedium }}" class="img-fluid">
+          </div>
+          <div class="col-12">
+            <h5 class="pt-3">{{ videoTitle }}</h5>
+
+            <a class="font-weight-normal" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+              <i class="ion-arrow-down-b"></i> Descripción: 
+            </a>
+            <div class="collapse" id="collapseExample">
+              {{ videoDescription }}
+            </div>
+            <hr>
+            <p>Duración: {{ videoDuration }}</p>
+          </div>
+
+          <div class="col-12 text-center" *ngIf="downloadOk">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#mp3" role="tab">mp3</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#video" role="tab">video</a>
+              </li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+              <div class="tab-pane active" id="mp3" role="tabpanel">
+
+                <iframe src="https://youtubetoany.com/@api/button/mp3/CevxZvSJLk8" width="100%" height="310px" scrolling="no" style="border:none;"></iframe>
+
+                <!--
+                <iframe src="//api.listenvid.com/?default/CevxZvSJLk8/mp3/fff" width="100%" height="310px" scrolling="no" style="border:none;"></iframe>
+
+                <iframe class="button-api-frame" src="https://youtubemp3api.com/@api/button/mp3/CevxZvSJLk8" width="100%" height="310px" allowtransparency="true" scrolling="no" style="border: none; overflow: hidden; height: 310px;" id="iFrameResizer0"></iframe>
+                <iframe class="button-api-frame" src="https://youtubemp3api.com/@api/button/mp3/CevxZvSJLk8" width="100%" height="310px" allowtransparency="true" scrolling="no" style="border:none"></iframe>
+              -->
+              </div>
+              <div class="tab-pane" id="video" role="tabpanel">                
+                <iframe class="button-api-frame" src="https://youtubemp3api.com/@api/button/videos/CevxZvSJLk8" width="100%" height="100%" allowtransparency="true" scrolling="no" style="border:none"></iframe>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 text-center mt-3 mb-3">
+            <p class="h6">
+            Gracias a<br>
+            {{ videoChannelTitle }} <i class="ion-alert"></i>
+            </p>
+          </div>
+          <div class="col-6 text-center">
+            <h2 class="ion-thumbsup" title="Me gusta"></h2>
+            <p>{{ videoLikes }}</p>
+          </div>
+          <div class="col-6 text-center">
+            <h2 class="ion-thumbsdown" title="No me gusta"></h2>
+            <p>{{ videoDislikes }}</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
