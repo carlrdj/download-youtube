@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { YoutubeService } from './@service/youtube.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -8,6 +9,7 @@ import { DomSanitizer } from '@angular/platform-browser';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+
 	viewVideoOk:boolean = false;
 	downloadOk:boolean = false;
 	videoId:any = "";
@@ -21,14 +23,20 @@ export class AppComponent {
 	videoDislikes:any = "";
 	videoViews:any = "";
 	search:any ="";
-	videos:any = [];
+	videosDefault:any = [];
+	videosSearch:any = [];
+	mp3Downloads:any = [];
+	videosDownloads:any = [];
+	onlyMp3Downloads:any = [];
+	onlyVideosDownloads:any = [];
 
   constructor(
   	private youtubeService: YoutubeService,
-  	private domSanitizer: DomSanitizer
+  	private domSanitizer: DomSanitizer,
+  	private router: Router
   )
   {
-  	this.getYoutubeListSearch();
+  	this.getYoutubeListDefault();
   }
 
   viewVideo(id){
@@ -39,25 +47,42 @@ export class AppComponent {
   	this.getYoutubeVideoInfo(id);
   }
 
+  stopViewVideo(){
+		this.viewVideoOk = false;
+		this.downloadOk = false;
+  	this.videoId = "";
+  }
+
   download(id){
 		this.viewVideoOk = false;
 		this.downloadOk = true;
+  	this.mp3Downloads=[];
+  	this.videosDownloads=[];
   	this.getYoutubeVideoInfo(id);
   	this.getDownloadMp3(id);
+  	this.getDownloadVideos(id);
   }
 
 	getEmbedUrl(id){
 		return this.domSanitizer.bypassSecurityTrustResourceUrl('https://www.youtube.com/embed/'+id+'?rel=0&amp;autoplay=1');
 	}
 
-  getYoutubeListSearch() 
-  {this.search ='AnoHana Secret base Ending. sub español';
-  		console.log(this.search);
-  	this.youtubeService.getYoutubeListSearch(this.search)
-	    .subscribe((data) => 
+	getYoutubeListDefault(){
+		this.youtubeService.getYoutubeListSearch('', 30)
+  	.subscribe((data) => 
 	    {
-	      this.videos = data.items;
-	      console.log(data);
+	      this.videosDefault = data.items;
+	    }, error => {
+	      console.log(error);
+	    });
+	}
+  getYoutubeListSearch() 
+  { 
+		this.videosSearch = [];
+  	this.youtubeService.getYoutubeListSearch(this.search, 30)
+  	.subscribe((data) => 
+	    {
+	      this.videosSearch = data.items;
 	    }, error => {
 	      console.log(error);
 	    });
@@ -89,13 +114,31 @@ export class AppComponent {
 
   getDownloadMp3(id){
 		this.youtubeService.getDownloadMp3(id)
-	    .subscribe((data) => 
-	    {
-	      
-	      console.log(data);
-	    }, error => {
-	      console.log(error);
-	    });
+      .subscribe((data) => 
+		    {
+		    	let stringJson = data.slice(0,-38231);
+					let json = JSON.parse(stringJson);
+		      this.mp3Downloads = Object.keys(json.vidInfo).map((key)=>{ return json.vidInfo[key]});
+		    }, error => {
+		      console.log(error);
+		    });
   }
+
+  getDownloadVideos(id){
+		this.youtubeService.getDownloadVideos(id)
+      .subscribe((data) => 
+		    {
+		    	let stringJson = data.slice(0,-38231);
+					let json = JSON.parse(stringJson);
+		      this.videosDownloads = Object.keys(json.vidInfo).map((key)=>{ return json.vidInfo[key]});
+
+		      console.log(this.videosDownloads);
+		    }, error => {
+		      console.log(error);
+		    });
+  }
+
+
+  
 
 }

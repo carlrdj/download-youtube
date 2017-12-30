@@ -3,48 +3,118 @@
     <div class="row">
       <div class="col-lg-8 push-lg-2">
         <div class="input-group input-group-lg m-3">
-          <input id="query" type="text" class="form-control" placeholder="Buscar ..." value="Secret Base" [(ngModel)]="search">
+          <input id="query" type="text" class="form-control" placeholder="Buscar ..." value="AnoHana Secret base Ending. sub español" [(ngModel)]="search" (keyup.enter)="getYoutubeListSearch()">
           <div class="input-group-addon" (click)="getYoutubeListSearch()">
             <i class="ion-search"></i>
           </div>
         </div>
       </div>
       <div class="col-lg-12">
-        <ng-container *ngFor="let video of videos">
-          
+        <div *ngIf="!videosSearch.length && !videosDefault.length" class="loader m-4">
+          <div class="ball-scale-multiple"><div></div><div></div><div></div></div>
+        </div>
+        <div *ngIf="!videosSearch.length" class="container">
+          <div class="row">
+            <ng-container *ngFor="let video of videosDefault">
+              <div class="card col-lg-4 col-md-6">
+                <div class="text-center mt-3">
+                  <img class="card-img-top img-fluid" src="{{ video.snippet.thumbnails.default.url }}" alt="{{ video.snippet.title }}" width="200px" height="150px">
+                </div>
+                <div class="card-block d-flex align-content-between flex-wrap">
+                  <h6 class="card-title text-primary pointer" (click)="viewVideo(video.id.videoId)">
+                    {{ video.snippet.title }}
+                  </h6>
+                  <div class="col-12 text-center p-0 m-0">
+                    <button class="btn btn-success m-1 pointer show-md-down hidden-lg-up" (click)="download(video.id.videoId)">
+                      Descargar
+                    </button>
+                    <button [ngClass]="{hidden: video.id.videoId === videoId}" class="btn btn-primary m-1 pointer show-md-down hidden-lg-up" (click)="viewVideo(video.id.videoId)" data-toggle="modal" data-target="#viewVideoModal">
+                      Ver video
+                    </button>
+                    <button class="btn btn-success m-1 pointer hidden-md-down" (click)="download(video.id.videoId)">
+                      Descargar
+                    </button>
+                    <button [ngClass]="{hidden: video.id.videoId === videoId}" class="btn btn-primary m-1 pointer hidden-md-down" (click)="viewVideo(video.id.videoId)">
+                      <i class="ion-arrow-right-b mr-2"></i> Play
+                    </button>
+                    <button *ngIf="video.id.videoId == videoId" class="btn btn btn-outline-danger m-1 pointer" (click)="stopViewVideo()">
+                      <i class="ion-android-checkbox-blank mr-2"></i> Stop
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </ng-container>    
+          </div>      
+        </div>
+        <ng-container *ngFor="let video of videosSearch">
           <div class="list-group-item list-group-item-action">
             <div class="container">
               <div class="row">
-                <div class="col-lg-3 text-center">
-                  <img width="120px" height="90px" src="{{ video.snippet.thumbnails.default.url }}" class="m-2">
+                <div class="col-lg-3 col-md-3 col-sm-4 text-center">
+                  <img width="120px" height="90px" src="{{ video.snippet.thumbnails.default.url }}" class="m-2" alt="{{ video.snippet.title }}">
                 </div>
-                <div class="col-lg-6">
-                  <h5 class="m-2">{{ video.snippet.title }}</h5>
+                <div class="col-lg-6 col-md-6 col-sm-8">
+                  <h5 class="m-2 pointer text-primary" (click)="viewVideo(video.id.videoId)">
+                    {{ video.snippet.title }}
+                  </h5>
                   <i class="m-2"><b>Autor: </b>{{ video.snippet.channelTitle }}</i>
                 </div>
-                <div class="col-lg-3 text-center">
-                  <button class="btn btn-success m-1" (click)="download(video.id.videoId)">Descargar</button>
-                  <button class="btn btn-info m-1" (click)="viewVideo(video.id.videoId)">Ver video</button>
+                <div class="col-lg-3 col-md-3 col-sm-12 text-center">
+                  <button class="btn btn-success m-1 pointer show-md-down hidden-lg-up" (click)="download(video.id.videoId)">
+                    Descargar
+                  </button>
+                  <button [ngClass]="{hidden: video.id.videoId === videoId}" class="btn btn-primary m-1 pointer show-md-down hidden-lg-up" (click)="viewVideo(video.id.videoId)" data-toggle="modal" data-target="#viewVideoModal">
+                    Ver video
+                  </button>
+                  <button class="btn btn-success m-1 pointer hidden-md-down" (click)="download(video.id.videoId)">
+                    Descargar
+                  </button>
+                  <button [ngClass]="{hidden: video.id.videoId === videoId}" class="btn btn-primary m-1 pointer hidden-md-down" (click)="viewVideo(video.id.videoId)">
+                    <i class="ion-arrow-right-b mr-2"></i> Play
+                  </button>
+                  <button *ngIf="video.id.videoId == videoId" class="btn btn btn-outline-danger m-1 pointer" (click)="stopViewVideo()">
+                    <i class="ion-android-checkbox-blank mr-2"></i> Stop
+                  </button>
                 </div>
               </div>
             </div>
           </div>
-
         </ng-container>
       </div>
     </div>
   </div>
+  <div *ngIf="!viewVideoOk && !downloadOk" class="col-lg-4 mt-4 pt-5">
+    <blockquote class="blockquote">
+      <h1 class="display-4">Descarga Mp3 y Videos de YouTube sin publicidad!</h1>
+      <h1 class="display-4 text-right"><i class="ion-ios-paw"></i></h1>
+      <footer class="blockquote-footer">
+        <a href="mailto:carl.rdj@gmail.com">
+          carl.rdj@gmail.com
+        </a>
+      </footer>
+    </blockquote>
+      <hr>
+    <div class="row">
+      <div class="col-6 text-center text-like">
+        <h1><i class="ion-thumbsup hvr-buzz"></i></h1>
+        <h4>Dale like!</h4>
+      </div>
+      <div class="col-6 text-center p-2">
+        <div class="fb-like" data-href="https://github.com/carlrdj/download-youtube" data-layout="box_count" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
+      </div>
+    </div>  
+  </div>
 
-  <div class="col-lg-4">
+  <div *ngIf="viewVideoOk || downloadOk" id="sectionInfo" class="col-lg-4">
+    <button class="btn btn-warning btn-lg pointer close-sectionInfo hidden-lg-up" (click)="stopViewVideo()">
+      <i class="ion-close-round"></i>
+    </button>
     <div class="bg-danger text-white text-center mt-2 mb-3">
-      <h3 class="display-5 p-3">Youtube</h3>
+      <h3 class="display-5 p-3">YouTube</h3>
     </div>
-
-    <div *ngIf="viewVideoOk">
-      <iframe [src]="videoUrl" width="100%" height="300" frameborder="0" scrolling="no"></iframe>
+    <div *ngIf="viewVideoOk" class="embed-responsive embed-responsive-16by9">
+      <iframe class="embed-responsive-item" [src]="videoUrl" width="100%" height="300" frameborder="0" scrolling="no" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
     </div>
-
-
     <div *ngIf="viewVideoOk || downloadOk" class="list-group-item  mt-3">
       <div class="container">
         <div class="row">
@@ -53,7 +123,6 @@
           </div>
           <div class="col-12">
             <h5 class="pt-3">{{ videoTitle }}</h5>
-
             <a class="font-weight-normal" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
               <i class="ion-arrow-down-b"></i> Descripción: 
             </a>
@@ -63,9 +132,7 @@
             <hr>
             <p>Duración: {{ videoDuration }}</p>
           </div>
-
           <div class="col-12 text-center" *ngIf="downloadOk">
-            <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
               <li class="nav-item">
                 <a class="nav-link active" data-toggle="tab" href="#mp3" role="tab">mp3</a>
@@ -74,26 +141,33 @@
                 <a class="nav-link" data-toggle="tab" href="#video" role="tab">video</a>
               </li>
             </ul>
-
-            <!-- Tab panes -->
             <div class="tab-content">
-              <div class="tab-pane active" id="mp3" role="tabpanel">
-
-                <iframe src="https://youtubetoany.com/@api/button/mp3/CevxZvSJLk8" width="100%" height="310px" scrolling="no" style="border:none;"></iframe>
-
-                <!--
-                <iframe src="//api.listenvid.com/?default/CevxZvSJLk8/mp3/fff" width="100%" height="310px" scrolling="no" style="border:none;"></iframe>
-
-                <iframe class="button-api-frame" src="https://youtubemp3api.com/@api/button/mp3/CevxZvSJLk8" width="100%" height="310px" allowtransparency="true" scrolling="no" style="border: none; overflow: hidden; height: 310px;" id="iFrameResizer0"></iframe>
-                <iframe class="button-api-frame" src="https://youtubemp3api.com/@api/button/mp3/CevxZvSJLk8" width="100%" height="310px" allowtransparency="true" scrolling="no" style="border:none"></iframe>
-              -->
+              <div class="tab-pane active p-2" id="mp3" role="tabpanel">
+                <div class="loader" *ngIf="!mp3Downloads.length">
+                  <div class="ball-scale-multiple"><div></div><div></div><div></div></div>
+                </div>
+                <ng-container *ngFor="let mp3Download of mp3Downloads">                  
+                  <a href="{{ mp3Download.dloadUrl }}" class="col-5 btn btn-md p-1 m-1 text-center bg-mp3-download-{{ mp3Download.bitrate }} text-white hvr-grow">
+                    <h6>MP3</h6>
+                    <h6>{{ mp3Download.bitrate }} Kbps</h6>
+                    <h6 class="download-mb-border-top pt-1">{{ mp3Download.mp3size }}</h6>
+                  </a>
+                </ng-container>
               </div>
-              <div class="tab-pane" id="video" role="tabpanel">                
-                <iframe class="button-api-frame" src="https://youtubemp3api.com/@api/button/videos/CevxZvSJLk8" width="100%" height="100%" allowtransparency="true" scrolling="no" style="border:none"></iframe>
+              <div class="tab-pane p-2" id="video" role="tabpanel">
+                <div class="loader" *ngIf="!videosDownloads.length">
+                  <div class="ball-scale-multiple"><div></div><div></div><div></div></div>
+                </div>
+                <ng-container *ngFor="let videosDownload of videosDownloads">                  
+                  <a href="{{ videosDownload.directurl }}" class="col-5 btn btn-md p-1 m-1 text-center bg-videos-download-{{ videosDownload.quality }} text-white hvr-grow">
+                    <h6 class="text-uppercase">{{ videosDownload.ftype }}</h6>
+                    <h6>{{ videosDownload.quality }}p</h6>
+                    <h6 class="download-mb-border-top pt-1">{{ videosDownload.rSize }}</h6>
+                  </a>
+                </ng-container>
               </div>
             </div>
           </div>
-
           <div class="col-12 text-center mt-3 mb-3">
             <p class="h6">
             Gracias a<br>
@@ -108,7 +182,6 @@
             <h2 class="ion-thumbsdown" title="No me gusta"></h2>
             <p>{{ videoDislikes }}</p>
           </div>
-
         </div>
       </div>
     </div>

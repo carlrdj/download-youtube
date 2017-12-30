@@ -2,11 +2,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-
+import { Routes, RouterModule } from '@angular/router';
 import { YoutubeService } from './@service/youtube.service';
-
 import { AppComponent } from './app.component';
 
+const appRoutes: Routes = [
+  {path: '', component: AppComponent},
+];
 
 @NgModule({
   declarations: [
@@ -15,7 +17,8 @@ import { AppComponent } from './app.component';
   imports: [
     BrowserModule,
     HttpModule,
-    FormsModule
+    FormsModule,
+    RouterModule.forRoot(appRoutes),
   ],
   providers: [YoutubeService],
   bootstrap: [AppComponent]

@@ -16,45 +16,48 @@
 </head>
 <body>
 	<!-- Fixed navbar -->
-    <nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-primary">
-    	<div class="container">
-    		<a href="">
-			    <h1 class="navbar-brand  mb-0">Dev7</h1>
-				</a>
-	      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-	        <span class="navbar-toggler-icon"></span>
-	      </button>
-	      <div class="collapse navbar-collapse" id="navbarCollapse">
-	        <ul class="navbar-nav mr-auto">
-	          <li class="nav-item active">
-	            <a class="nav-link" href="#">Inicio <span class="sr-only">(current)</span></a>
-	          </li>
-	          <!--
-	          <li class="nav-item">
-	            <a class="nav-link" href="#">Link</a>
-	          </li>
-	        -->
-	        </ul>
-			  </div>
-    	</div>
-    </nav>
+  <nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-primary">
+  	<div class="container">
+  		<a routerLink="/" class="pointer">
+		    <h1 class="navbar-brand  mb-0">
+          <i class="ion-social-youtube"></i> 
+          Dev7 
+        </h1>
+			</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active" routerLinkActive="active">
+            <a class="nav-link pointer" routerLink="/">Inicio <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a class="nav-link disabled" routerLink="/">Contacto</a>
+          </li>
+        </ul>
+		  </div>
+  	</div>
+  </nav>
 
-    <!-- Begin page content -->
-    <div id="container" class="container">
-
-  		<app-root></app-root>
-
-    </div>
+  <div id="container" class="container">
+		<app-root></app-root>
+  </div>
 
   <footer class="footer">
     <div class="container">
-    	<div class="row">
-    		<div class="col-lg-12 text-right">
-    			Developed by: 
-    			<a href="mailto:carl@gmail.com">
-    				carl@gmail.com
-    			</a>
-    		</div>
+    	<div class="row ">
+        <div class="col-lg-6 col-md-6 col-sm-4 col-3 text-left">
+          <span class="text-primary pl-2">V. 1.0.1</span>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-8 col-9 text-right">
+          <span class="pr-2">
+            Developed by: 
+            <a href="mailto:carl.rdj@gmail.com">
+              carl.rdj@gmail.com
+            </a>
+        </span>
+        </div>
     	</div>
     </div>
   </footer>
@@ -65,10 +68,35 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 
+  <script type="text/javascript">
+    /*
+    $('#viewVideoModal').on('shown.bs.modal', function () {
+      
+    });
+    var screen = window.matchMedia('(min-width: 992px)');
+    mediaQuery();
+    $('#viewVideoModal').modal('close');
+    screen.addListener(mediaQuery);
+    function mediaQuery() {
+      if (screen.matches) {
+        console.log('grande');
+        $('#viewVideoModal').modal('toggle');
+      }else{
+        console.log('pequeño');
+        $('#viewVideoModal').modal('toggle');
+      }
+    }
+    */
 
-  
-  <!-- Optional script that automatically makes iframe content responsive. -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/3.5.14/iframeResizer.min.js"></script>
-  <script>iFrameResize({}, '.button-api-frame');</script>
+
+  </script>
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = 'https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v2.11&appId=1270094613101528';
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
 </body>
 </html>
