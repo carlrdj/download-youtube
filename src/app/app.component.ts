@@ -82,7 +82,9 @@ export class AppComponent {
   	this.youtubeService.getYoutubeListSearch(this.search, 30)
   	.subscribe((data) => 
 	    {
-	      this.videosSearch = data.items;
+	    	if (this.search.length) {
+	      	this.videosSearch = data.items;
+	    	}
 	    }, error => {
 	      console.log(error);
 	    });

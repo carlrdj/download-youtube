@@ -96,6 +96,34 @@ code {
   display: none;
 }
 
+.rotate-30{
+  transform: rotate(30deg);
+}
+
+.input-group-addon{
+  background-color: #0275D8;
+  color: #FFFFFF;
+}
+
+.input-group-addon:hover{
+  background-color: #025AA5;
+}
+
+.icon-move-rotate-30{
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  animation:iconMoveRotate 4s linear infinite;
+  -moz-animation:iconMoveRotate 4s linear infinite;
+  -webkit-animation:iconMoveRotate 4s linear infinite;
+  -o-animation:iconMoveRotate 4s linear infinite;
+}
+@keyframes iconMoveRotate
+{
+    0%,100%   {transform: rotate(30deg);}
+    50%  {transform: rotate(45deg);}
+}
+
 /* ball-scale-multiple */
 .loader {
       box-sizing: border-box;
@@ -221,8 +249,18 @@ code {
 
   #sectionInfo .close-sectionInfo{
     position: absolute;
-    right: 10px;
+    right: 13px;
     top: 10px;
+    width: 56px;
+    height: 56px;
+    border-radius: 100%;
+    background: #FFF;
+  }
+
+  #sectionInfo .close-sectionInfo i{
+    font-size: 56px;
+    border-radius: 100%;
+    color: #D50000
   }
 }
 

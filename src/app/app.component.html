@@ -2,10 +2,10 @@
   <div class="col-lg-8">
     <div class="row">
       <div class="col-lg-8 push-lg-2">
-        <div class="input-group input-group-lg m-3">
+        <div class="input-group input-group-lg mt-3 mb-4">
           <input id="query" type="text" class="form-control" placeholder="Buscar ..." value="AnoHana Secret base Ending. sub español" [(ngModel)]="search" (keyup.enter)="getYoutubeListSearch()">
-          <div class="input-group-addon" (click)="getYoutubeListSearch()">
-            <i class="ion-search"></i>
+          <div class="input-group-addon pointer" (click)="getYoutubeListSearch()">
+            <i class="fa fa-search" aria-hidden="true"></i>
           </div>
         </div>
       </div>
@@ -26,19 +26,19 @@
                   </h6>
                   <div class="col-12 text-center p-0 m-0">
                     <button class="btn btn-success m-1 pointer show-md-down hidden-lg-up" (click)="download(video.id.videoId)">
-                      Descargar
+                      <i class="fa fa-cloud-download mr-2" aria-hidden="true"></i>Descargar
                     </button>
                     <button [ngClass]="{hidden: video.id.videoId === videoId}" class="btn btn-primary m-1 pointer show-md-down hidden-lg-up" (click)="viewVideo(video.id.videoId)" data-toggle="modal" data-target="#viewVideoModal">
-                      Ver video
+                      <i class="fa fa-play mr-2" aria-hidden="true"></i>Play
                     </button>
                     <button class="btn btn-success m-1 pointer hidden-md-down" (click)="download(video.id.videoId)">
-                      Descargar
+                      <i class="fa fa-cloud-download mr-2" aria-hidden="true"></i>Descargar
                     </button>
                     <button [ngClass]="{hidden: video.id.videoId === videoId}" class="btn btn-primary m-1 pointer hidden-md-down" (click)="viewVideo(video.id.videoId)">
-                      <i class="ion-arrow-right-b mr-2"></i> Play
+                      <i class="fa fa-play mr-2" aria-hidden="true"></i>Play
                     </button>
                     <button *ngIf="video.id.videoId == videoId" class="btn btn btn-outline-danger m-1 pointer" (click)="stopViewVideo()">
-                      <i class="ion-android-checkbox-blank mr-2"></i> Stop
+                      <i class="fa fa-stop mr-2" aria-hidden="true"></i>Stop
                     </button>
                   </div>
                 </div>
@@ -61,19 +61,19 @@
                 </div>
                 <div class="col-lg-3 col-md-3 col-sm-12 text-center">
                   <button class="btn btn-success m-1 pointer show-md-down hidden-lg-up" (click)="download(video.id.videoId)">
-                    Descargar
+                    <i class="fa fa-cloud-download mr-2" aria-hidden="true"></i>Descargar
                   </button>
                   <button [ngClass]="{hidden: video.id.videoId === videoId}" class="btn btn-primary m-1 pointer show-md-down hidden-lg-up" (click)="viewVideo(video.id.videoId)" data-toggle="modal" data-target="#viewVideoModal">
-                    Ver video
+                    <i class="fa fa-play mr-2" aria-hidden="true"></i>Play
                   </button>
                   <button class="btn btn-success m-1 pointer hidden-md-down" (click)="download(video.id.videoId)">
-                    Descargar
+                    <i class="fa fa-cloud-download mr-2" aria-hidden="true"></i>Descargar
                   </button>
                   <button [ngClass]="{hidden: video.id.videoId === videoId}" class="btn btn-primary m-1 pointer hidden-md-down" (click)="viewVideo(video.id.videoId)">
-                    <i class="ion-arrow-right-b mr-2"></i> Play
+                    <i class="fa fa-play mr-2" aria-hidden="true"></i>Play
                   </button>
                   <button *ngIf="video.id.videoId == videoId" class="btn btn btn-outline-danger m-1 pointer" (click)="stopViewVideo()">
-                    <i class="ion-android-checkbox-blank mr-2"></i> Stop
+                    <i class="fa fa-stop mr-2" aria-hidden="true"></i>Stop
                   </button>
                 </div>
               </div>
@@ -86,17 +86,17 @@
   <div *ngIf="!viewVideoOk && !downloadOk" class="col-lg-4 mt-4 pt-5">
     <blockquote class="blockquote">
       <h1 class="display-4">Descarga Mp3 y Videos de YouTube sin publicidad!</h1>
-      <h1 class="display-4 text-right"><i class="ion-ios-paw"></i></h1>
       <footer class="blockquote-footer">
         <a href="mailto:carl.rdj@gmail.com">
           carl.rdj@gmail.com
         </a>
+        <i class="fa fa-gitlab fa-4x rotate-30 icon-move-rotate-30" aria-hidden="true"></i>
       </footer>
     </blockquote>
       <hr>
     <div class="row">
       <div class="col-6 text-center text-like">
-        <h1><i class="ion-thumbsup hvr-buzz"></i></h1>
+        <i class="fa fa-hand-o-right fa-4x hvr-buzz" aria-hidden="true"></i>
         <h4>Dale like!</h4>
       </div>
       <div class="col-6 text-center p-2">
@@ -106,9 +106,10 @@
   </div>
 
   <div *ngIf="viewVideoOk || downloadOk" id="sectionInfo" class="col-lg-4">
-    <button class="btn btn-warning btn-lg pointer close-sectionInfo hidden-lg-up" (click)="stopViewVideo()">
-      <i class="ion-close-round"></i>
-    </button>
+    <div class="close-sectionInfo hidden-lg-up text-center" (click)="stopViewVideo()">
+      <i class="fa fa-times-circle fa-4x pointer m-0 p-0" aria-hidden="true"></i>
+    </div>
+      
     <div class="bg-danger text-white text-center mt-2 mb-3">
       <h3 class="display-5 p-3">YouTube</h3>
     </div>
@@ -124,7 +125,7 @@
           <div class="col-12">
             <h5 class="pt-3">{{ videoTitle }}</h5>
             <a class="font-weight-normal" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-              <i class="ion-arrow-down-b"></i> Descripción: 
+              <i class="fa fa-chevron-down" aria-hidden="true"></i> Descripción: 
             </a>
             <div class="collapse" id="collapseExample">
               {{ videoDescription }}
@@ -168,18 +169,20 @@
               </div>
             </div>
           </div>
-          <div class="col-12 text-center mt-3 mb-3">
-            <p class="h6">
-            Gracias a<br>
-            {{ videoChannelTitle }} <i class="ion-alert"></i>
-            </p>
+          <div class="col-12 text-center mt-3 mb-4">
+            <div class="h6">
+              Gracias a
+            </div>
+            <div class="h5">
+            {{ videoChannelTitle }} <i class="fa fa-exclamation fa-2x" aria-hidden="true"></i>
+            </div>
           </div>
           <div class="col-6 text-center">
-            <h2 class="ion-thumbsup" title="Me gusta"></h2>
+            <i class="fa fa-thumbs-o-up fa-3x" aria-hidden="true"></i>
             <p>{{ videoLikes }}</p>
           </div>
           <div class="col-6 text-center">
-            <h2 class="ion-thumbsdown" title="No me gusta"></h2>
+            <i class="fa fa-thumbs-o-down fa-3x" aria-hidden="true"></i>
             <p>{{ videoDislikes }}</p>
           </div>
         </div>
