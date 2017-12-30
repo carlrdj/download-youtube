@@ -54,6 +54,7 @@ export class AppComponent {
   }
 
   download(id){
+  	this.videoId = id;
 		this.viewVideoOk = false;
 		this.downloadOk = true;
   	this.mp3Downloads=[];
@@ -133,12 +134,23 @@ export class AppComponent {
 		    	let stringJson = data.slice(0,-38231);
 					let json = JSON.parse(stringJson);
 		      this.videosDownloads = Object.keys(json.vidInfo).map((key)=>{ return json.vidInfo[key]});
-
-		      console.log(this.videosDownloads);
 		    }, error => {
 		      console.log(error);
 		    });
   }
+
+	downloadFile(url){
+		//window.open("https://www.yt2mp3s.me/@download/320-5a4750c67f11d-14120000/mp3/KG-F7FxAA68/Secret%2BBase-AnoHana%2BED%2B%255BFandub%2BEspa%25C3%25B1ol%255D.mp3");
+		let newUrl = url.replace("youtubetoany.com", "www.yt2mp3s.me");
+		newUrl = 'https:' + newUrl;
+		//www.yt2mp3s.me/@download/320-5a47591c976ef-14120000/mp3/KG-F7FxAA68/Secret%2BBase-AnoHana%2BED%2B%255BFandub%2BEspa%25C3%25B1ol%255D.mp3
+		//www.yt2mp3s.me/@download/320-5a4750c67f11d-14120000/mp3/KG-F7FxAA68/Secret%2BBase-AnoHana%2BED%2B%255BFandub%2BEspa%25C3%25B1ol%255D.mp3
+		//console.log("E");
+		//window.open(newUrl);
+		//console.log("https://www.youtubetoany.com/@download/320-5a4750c67f11d-14120000/mp3/KG-F7FxAA68/Secret%2BBase-AnoHana%2BED%2B%255BFandub%2BEspa%25C3%25B1ol%255D.mp3");
+	}  
+		    	
+
 
 
   
